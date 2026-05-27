@@ -14,30 +14,31 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider> 
-
     <html lang="en">
-      <body className={`${inter.className} bg-gray-100 text-gray-900`}>
-        
-        {/* Header */}
-        <Header />
+      <body
+        className={`${inter.className} bg-gray-100 text-gray-900 overflow-x-hidden`}
+      >
+        <ClerkProvider>
 
-        {/* Main Content */}
-        <main className="min-h-screen">
-          {children}
-        </main>
+          {/* Header */}
+          <Header />
 
-        {/* Footer */}
-        <footer className="bg-black text-white py-6 mt-10">
-          <div className="container mx-auto text-center">
-            <p className="text-sm">
-              &copy; 2026 Drivemart. All rights reserved.
-            </p>
-          </div>
-        </footer>
+          {/* Main Content */}
+          <main className="min-h-screen w-full">
+            {children}
+          </main>
 
+          {/* Footer */}
+          <footer className="bg-black text-white py-6 mt-10">
+            <div className="container mx-auto text-center">
+              <p className="text-sm">
+                &copy; 2026 Drivemart. All rights reserved.
+              </p>
+            </div>
+          </footer>
+
+        </ClerkProvider>
       </body>
     </html>
-    </ClerkProvider> 
   );
 }
