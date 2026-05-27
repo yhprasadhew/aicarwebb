@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-
 import {
   UserButton,
   useUser,
@@ -13,102 +12,62 @@ import {
 const Header = () => {
   const { user, isSignedIn } = useUser();
 
-  // CHANGE THIS EMAIL TO YOUR ADMIN EMAIL
-  const isAdmin =
-    user?.primaryEmailAddress?.emailAddress === "influencer3721@gmail.com";
+  const isAdmin = user?.primaryEmailAddress?.emailAddress === "influencer3721@gmail.com";
 
   return (
-    <header className="w-full bg-black text-white h-18 px-6 flex items-center justify-between shadow-md">
-
-      {/* LOGO */}
-      <Link href="/" className="flex items-center">
+    <header className="w-full bg-black/95 backdrop-blur-md text-white h-17 px-7 flex items-center justify-between shadow-lg border-b border-gray-200 fixed top-0 z-50">
+      
+      {/* LOGO - Fixed sizing & alignment */}
+      <Link href="/" className="flex items-center -ml-2">
         <Image
           src="/aiwebbcar.jpg"
-          alt="Logo"
-          width={110}
+          alt="AUTODRIVE Logo"
+          width={100}
           height={25}
           className="object-contain"
+          priority
         />
       </Link>
 
       {/* CENTER NAV */}
       <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-        <Link href="/" className="hover:text-gray-300 transition">
+        <Link href="/" className="hover:text-blue-600 transition-colors">
           Home
         </Link>
-
-        <Link href="/inventory" className="hover:text-gray-300 transition">
+        <Link href="/inventory" className="hover:text-blue-600 transition-colors">
           Inventory
         </Link>
-
-        <Link href="/about" className="hover:text-gray-300 transition">
+        <Link href="/about" className="hover:text-blue-600 transition-colors">
           About
         </Link>
       </nav>
 
       {/* RIGHT SIDE */}
       <div className="flex items-center gap-4">
-
-        {/* NOT SIGNED IN */}
         {!isSignedIn && (
           <SignInButton mode="modal">
-            <button className="bg-white text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition">
+            <button className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition">
               Sign In
             </button>
           </SignInButton>
         )}
 
-        {/* SIGNED IN */}
         {isSignedIn && (
           <>
-            {/* ADMIN */}
             {isAdmin ? (
               <>
-                <Link
-                  href="/"
-                  className="text-sm hover:text-gray-300 transition"
-                >
-                  Back to Website
-                </Link>
-
-                <Link
-                  href="/admin"
-                  className="text-sm hover:text-gray-300 transition"
-                >
-                  Admin Dashboard
-                </Link>
+                <Link href="/" className="text-sm hover:text-blue-600 transition">Back to Website</Link>
+                <Link href="/admin" className="text-sm hover:text-blue-600 transition">Admin Dashboard</Link>
               </>
             ) : (
               <>
-                {/* CUSTOMER */}
-                <Link
-                  href="/saved-cars"
-                  className="text-sm hover:text-gray-300 transition"
-                >
-                  Saved Cars
-                </Link>
-
-                <Link
-                  href="/reservations"
-                  className="text-sm hover:text-gray-300 transition"
-                >
-                  My Reservations
-                </Link>
+                <Link href="/saved-cars" className="text-sm hover:text-blue-600 transition">Saved Cars</Link>
+                <Link href="/reservations" className="text-sm hover:text-blue-600 transition">My Reservations</Link>
               </>
             )}
-
-            {/* PROFILE */}
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  avatarBox: "w-10 h-10",
-                },
-              }}
-            />
+            <UserButton afterSignOutUrl="/" />
           </>
         )}
-
       </div>
     </header>
   );

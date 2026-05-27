@@ -127,4 +127,24 @@
   html {
     @apply font-sans;
   }
+}.dotted-background {
+  background-color: #0a1428;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.15) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .gradient {
+    background: linear-gradient(to bottom right, #3b82f6, #22c55e);
+  }
+
+  .gradient-title {
+    @apply font-extrabold tracking-tighter text-transparent;
+    background: linear-gradient(to right, #3b82f6, #22c55e);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
 }
