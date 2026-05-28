@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -8,37 +9,35 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Drivemart",
-  description: "Find your next car with Drivemart",
+  title: "AUTODRIVE-AI",
+  description: "Find your Dream car with AUTODRIVE-AI",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} bg-gray-100 text-gray-900 overflow-x-hidden`}
-      >
-        <ClerkProvider>
-
-          {/* Header */}
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${inter.className} bg-[#071120] text-white overflow-x-hidden`}
+        >
+          {/* HEADER */}
           <Header />
 
-          {/* Main Content */}
+          {/* PAGE CONTENT */}
           <main className="min-h-screen w-full">
             {children}
           </main>
 
-          {/* Footer */}
-          <footer className="bg-black text-white py-6 mt-10">
-            <div className="container mx-auto text-center">
-              <p className="text-sm">
-                &copy; 2026 Drivemart. All rights reserved.
+          {/* FOOTER */}
+          <footer className="bg-black border-t border-white/10 text-white py-6">
+            <div className="max-w-7xl mx-auto px-6 text-center">
+              <p className="text-sm text-gray-400">
+                © 2026 AUTODRIVE-AI. All rights reserved.
               </p>
             </div>
           </footer>
-
-        </ClerkProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+
 import {
   UserButton,
   useUser,
@@ -12,62 +13,96 @@ import {
 const Header = () => {
   const { user, isSignedIn } = useUser();
 
-  const isAdmin = user?.primaryEmailAddress?.emailAddress === "influencer3721@gmail.com";
+  const isAdmin =
+    user?.primaryEmailAddress?.emailAddress ===
+    "influencer3721@gmail.com";
 
   return (
-    <header className="w-full bg-black/95 backdrop-blur-md text-white h-17 px-7 flex items-center justify-between shadow-lg border-b border-gray-200 fixed top-0 z-50">
-      
-      {/* LOGO - Fixed sizing & alignment */}
-      <Link href="/" className="flex items-center -ml-2">
-        <Image
-          src="/aiwebbcar.jpg"
-          alt="AUTODRIVE Logo"
-          width={100}
-          height={25}
-          className="object-contain"
-          priority
-        />
-      </Link>
+    <header className="fixed top-0 left-0 w-full h-20 bg-black/90 backdrop-blur-md border-b border-white/10 z-50">
 
-      {/* CENTER NAV */}
-      <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-        <Link href="/" className="hover:text-blue-600 transition-colors">
-          Home
-        </Link>
-        <Link href="/inventory" className="hover:text-blue-600 transition-colors">
-          Inventory
-        </Link>
-        <Link href="/about" className="hover:text-blue-600 transition-colors">
-          About
-        </Link>
-      </nav>
+      <div className="w-full h-full pl-2 pr-6 flex items-center justify-between">
 
-      {/* RIGHT SIDE */}
-      <div className="flex items-center gap-4">
-        {!isSignedIn && (
-          <SignInButton mode="modal">
-            <button className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition">
-              Sign In
-            </button>
-          </SignInButton>
-        )}
+        {/* LOGO */}
+        <Link
+          href="/"
+          className="flex items-center flex-shrink-0"
+        >
+          <div className="relative h-14 w-[220px]">
+            <Image
+              src="/aiwebbcar.jpg"
+              alt="AUTODRIVE Logo"
+              fill
+              priority
+              className="object-contain object-left"
+            />
+          </div>
+        </Link>
 
-        {isSignedIn && (
-          <>
-            {isAdmin ? (
-              <>
-                <Link href="/" className="text-sm hover:text-blue-600 transition">Back to Website</Link>
-                <Link href="/admin" className="text-sm hover:text-blue-600 transition">Admin Dashboard</Link>
-              </>
-            ) : (
-              <>
-                <Link href="/saved-cars" className="text-sm hover:text-blue-600 transition">Saved Cars</Link>
-                <Link href="/reservations" className="text-sm hover:text-blue-600 transition">My Reservations</Link>
-              </>
-            )}
-            <UserButton afterSignOutUrl="/" />
-          </>
-        )}
+        {/* NAVIGATION */}
+        <nav className="hidden md:flex items-center gap-10 text-sm font-medium text-white">
+
+          <Link
+            href="/"
+            className="hover:text-cyan-400 transition-colors duration-200"
+          >
+            Home
+          </Link>
+
+          <Link
+            href="/inventory"
+            className="hover:text-cyan-400 transition-colors duration-200"
+          >
+            Inventory
+          </Link>
+
+          <Link
+            href="/about"
+            className="hover:text-cyan-400 transition-colors duration-200"
+          >
+            About
+          </Link>
+
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="hover:text-cyan-400 transition-colors duration-200"
+            >
+              Admin
+            </Link>
+          )}
+        </nav>
+
+        {/* RIGHT SIDE */}
+        <div className="flex items-center gap-5 text-white">
+
+          {!isSignedIn && (
+            <SignInButton mode="modal">
+              <button className="bg-white text-black px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-gray-200 transition-all duration-200">
+                Sign In
+              </button>
+            </SignInButton>
+          )}
+
+          {isSignedIn && (
+            <>
+              <Link
+                href="/saved-cars"
+                className="hidden md:flex text-sm hover:text-cyan-400 transition-colors duration-200"
+              >
+                ♡ Saved Cars
+              </Link>
+
+              <Link
+                href="/reservations"
+                className="hidden md:flex text-sm hover:text-cyan-400 transition-colors duration-200"
+              >
+                📅 Reservations
+              </Link>
+
+              <UserButton afterSignOutUrl="/" />
+            </>
+          )}
+        </div>
       </div>
     </header>
   );
