@@ -1,7 +1,7 @@
-// data.js - Featured Cars with professional image URLs and complete specifications
+// Fallback inventory when database is unavailable (dev/demo only)
 export const featuredCars = [
   {
-    id: 1,
+    id: "demo-1",
     make: "Tesla",
     model: "Model S",
     year: 2024,
@@ -9,12 +9,14 @@ export const featuredCars = [
     mileage: 15000,
     transmission: "Automatic",
     fuelType: "Electric",
-    color: "white",
+    color: "White",
+    bodyType: "Sedan",
     wishlisted: false,
-    image: "https://images.unsplash.com/photo-1617788138017-80ad40651399",
+    image:
+      "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=1200&auto=format&fit=crop",
   },
   {
-    id: 2,
+    id: "demo-2",
     make: "BMW",
     model: "i8",
     year: 2023,
@@ -22,12 +24,14 @@ export const featuredCars = [
     mileage: 22000,
     transmission: "Automatic",
     fuelType: "Hybrid",
-    color: "blue",
+    color: "Blue",
+    bodyType: "Coupe",
     wishlisted: false,
-    image: "/i77.jpg",
+    image:
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1200&auto=format&fit=crop",
   },
   {
-    id: 3,
+    id: "demo-3",
     make: "Audi",
     model: "R8",
     year: 2022,
@@ -36,24 +40,28 @@ export const featuredCars = [
     transmission: "Automatic",
     fuelType: "Petrol",
     color: "Black",
+    bodyType: "Coupe",
     wishlisted: false,
-    image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?q=80&w=2070&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1200&auto=format&fit=crop",
   },
-{
-  id :4,
-  make : "Nissan",
-  model : "GT-R",
-  year : 2020,
-  price : 260000,
-  mileage : 1000,
-  transmission : "Automatic",
-  fuelType : "Petrol",
-  color : "Grey",
-  wishlisted : false,
-  image : "/gtr.png",
-},
-{
-    id: 5,
+  {
+    id: "demo-4",
+    make: "Nissan",
+    model: "GT-R",
+    year: 2020,
+    price: 260000,
+    mileage: 1000,
+    transmission: "Automatic",
+    fuelType: "Petrol",
+    color: "Grey",
+    bodyType: "Coupe",
+    wishlisted: false,
+    image:
+      "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=1200&auto=format&fit=crop",
+  },
+  {
+    id: "demo-5",
     make: "Mercedes-Benz",
     model: "C-Class",
     year: 2021,
@@ -61,13 +69,14 @@ export const featuredCars = [
     mileage: 25000,
     transmission: "Automatic",
     fuelType: "Petrol",
-    color: "blue",
+    color: "Blue",
+    bodyType: "Sedan",
     wishlisted: false,
-    image: "/benzy.png",
-},
-
-{
-    id: 6,
+    image:
+      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1200&auto=format&fit=crop",
+  },
+  {
+    id: "demo-6",
     make: "Porsche",
     model: "Taycan",
     year: 2025,
@@ -75,24 +84,25 @@ export const featuredCars = [
     mileage: 500,
     transmission: "Automatic",
     fuelType: "Electric",
-    color: "white",
+    color: "White",
+    bodyType: "Sedan",
     wishlisted: false,
-    image: "/taycan.jpg",
-}
-
+    image:
+      "https://images.unsplash.com/photo-1614162692292-7a56aaaae7cf?w=1200&auto=format&fit=crop",
+  },
 ];
 
 export const carMakes = [
-    { id:1, name : "tesla" ,image : "/mod/teslam.jpg" },
-    { id:2, name : "bmw", image : "/mod/bmwm.jpg" },
-    { id:3, name : "audi", image : "/mod/audim.jpg" },
-    { id:4, name : "Nissan", image : "/mod/nissanmm.jpg" },
-    { id:5, name : "mercedes", image : "/mod/benzn.jpg" },
-    { id:6, name : "porsche", image : "/mod/pom..png" },
+  { id: 1, name: "tesla" },
+  { id: 2, name: "bmw" },
+  { id: 3, name: "audi" },
+  { id: 4, name: "nissan" },
+  { id: 5, name: "mercedes" },
+  { id: 6, name: "porsche" },
 ];
 
 export const bodyTypes = [
-    { id:1, name : "sedan"},
-    { id:2, name : "coupe"},
-    { id:3, name : "convertible"},
+  { id: 1, name: "sedan" },
+  { id: 2, name: "coupe" },
+  { id: 3, name: "convertible" },
 ];

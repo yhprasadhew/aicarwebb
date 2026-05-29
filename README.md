@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AUTODRIVE-AI
 
-## Getting Started
+AI-powered car marketplace: **Next.js 16**, **Clerk**, **Prisma**, **Supabase Postgres**, **OpenAI**.
 
-First, run the development server:
+## Features
+
+| Feature | Route / API |
+|---------|-------------|
+| AI photo search | Home → upload image → `/search` |
+| AI text search | Home → search bar → `/search` |
+| Inventory | `/cars`, `/cars/[id]` |
+| Wishlist | `/saved-cars`, `/api/wishlist` |
+| Test drive reservations | Car detail → `/reservations` |
+| Listing messages | Car detail → `/messages` |
+| Admin | `/admin` (bookings + inquiries) |
+
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env   # fill in keys
+pnpm run db:setup      # push schema + seed 6 cars
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See `.env.example`. Required:
 
-## Learn More
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`
+- `DATABASE_URL`, `DIRECT_URL` (Supabase Postgres)
+- `OPENAI_API_KEY` (AI search; keyword fallback without it)
 
-To learn more about Next.js, take a look at the following resources:
+## Admin
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Clerk user **Public metadata**:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```json
+{ "role": "admin" }
+```
 
-## Deploy on Vercel
+Or set `User.role` to `ADMIN` in the database.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Development server |
+| `pnpm build` | Production build |
+| `pnpm run db:push` | Sync Prisma schema to DB |
+| `pnpm run db:seed` | Seed dealership + cars |
+| `pnpm run db:setup` | Push + seed |
+
+## Note on package managers
+
+Use **pnpm** (`pnpm install`). If `npm install` fails with permission errors on Windows, use pnpm instead.

@@ -1,65 +1,60 @@
-// This is your Prisma schema file
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 model User {
-
-  id            String           @id @default(uuid())
-  clerkUserId   String           @unique
-  email         String           @unique
-  name          String?
-  imageUrl      String?
-  phone         String?
-  role          UserRole         @default(USER)
-  savedCars     UserSavedCar[]
-createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
+  id          String             @id @default(uuid())
+  clerkUserId String             @unique
+  email       String             @unique
+  name        String?
+  imageUrl    String?
+  phone       String?
+  role        UserRole           @default(USER)
+  savedCars   UserSavedCar[]
+  bookings    TestDriveBooking[]
+  inquiries   ListingInquiry[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 }
 
 model Dealership {
-  id             String           @id @default(uuid())
-  name           String           @default("AUTODRIVE Motors")
-  email          String?          @default("psd@gmail.com")
-  address        String
-  workingHours   WorkingHour[]
-  cars           Car[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  id           String        @id @default(uuid())
+  name         String        @default("AUTODRIVE Motors")
+  email        String?       @default("contact@autodrive.ai")
+  address      String
+  workingHours WorkingHour[]
+  cars         Car[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
-
 model Car {
-  id                 String               @id @default(uuid())
-
-  dealershipId       String
-
-  make               String
-  model              String
-  year               Int
-  price              Decimal              @db.Decimal(10, 2)
-  mileage            Int
-  color              String
-  fuelType           String
-  transmission       String
-  bodyType           String
-  seats              Int?
-  description        String
-  status             CarStatus            @default(AVAILABLE)
-  featured           Boolean              @default(false)
-  images             String[]             // Supabase URLs
-  dealership         Dealership           @relation(fields: [dealershipId], references: [id])
-  savedBy            UserSavedCar[]
-  testDriveBookings  TestDriveBooking[]
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
+  id                String              @id @default(uuid())
+  dealershipId      String
+  make              String
+  model             String
+  year              Int
+  price             Decimal             @db.Decimal(10, 2)
+  mileage           Int
+  color             String
+  fuelType          String
+  transmission      String
+  bodyType          String
+  seats             Int?
+  description       String
+  status            CarStatus           @default(AVAILABLE)
+  featured          Boolean             @default(false)
+  images            String[]
+  dealership        Dealership          @relation(fields: [dealershipId], references: [id], onDelete: Cascade)
+  savedBy           UserSavedCar[]
+  testDriveBookings TestDriveBooking[]
+  inquiries         ListingInquiry[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 
   @@index([make, model])
   @@index([price])
@@ -70,40 +65,65 @@ model Car {
 }
 
 model UserSavedCar {
-  id          String      @id @default(uuid())
-userId      String
-  carId       String
-  user        User        @relation(fields: [userId], references: [id])
-  car         Car         @relation(fields: [carId], references: [id])
-  createdAt   DateTime    @default(now())
+  id        String   @id @default(uuid())
+  userId    String
+  carId     String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 
   @@unique([userId, carId])
 }
 
 model WorkingHour {
-  id             String         @id @default(uuid())
-dealershipId   String
-dayOfWeek      DayOfWeek
-openTime       String
-closeTime      String
-isOpen         Boolean        @default(true)
-dealership     Dealership     @relation(fields: [dealershipId], references: [id])
-createdAt      DateTime       @default(now())
+  id           String     @id @default(uuid())
+  dealershipId String
+  dayOfWeek    DayOfWeek
+  openTime     String
+  closeTime    String
+  isOpen       Boolean    @default(true)
+  dealership   Dealership @relation(fields: [dealershipId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
 
   @@unique([dealershipId, dayOfWeek])
 }
 
 model TestDriveBooking {
+  id            String        @id @default(uuid())
+  carId         String
+  userId        String?
+  customerName  String
+  customerEmail String
+  customerPhone String
+  bookingDate   DateTime
+  message       String?
+  status        BookingStatus @default(PENDING)
+  car           Car           @relation(fields: [carId], references: [id], onDelete: Cascade)
+  user          User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
- id              String      @id @default(uuid())
- carId           String
-customerName    String
-customerEmail   String
-customerPhone   String
-bookingDate     DateTime
-message         String?
-car             Car         @relation(fields: [carId], references: [id])
-createdAt       DateTime    @default(now())
+  @@index([status])
+  @@index([userId])
+}
+
+model ListingInquiry {
+  id            String        @id @default(uuid())
+  carId         String
+  userId        String?
+  customerName  String
+  customerEmail String
+  message       String
+  adminReply    String?
+  status        InquiryStatus @default(OPEN)
+  car           Car           @relation(fields: [carId], references: [id], onDelete: Cascade)
+  user          User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([status])
+  @@index([carId])
+  @@index([userId])
 }
 
 enum UserRole {
@@ -125,4 +145,16 @@ enum DayOfWeek {
   FRIDAY
   SATURDAY
   SUNDAY
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum InquiryStatus {
+  OPEN
+  REPLIED
+  CLOSED
 }

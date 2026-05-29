@@ -3,6 +3,8 @@ import "./globals.css";
 
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
+import { checkUser } from "@/lib/checkUser";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,25 +12,20 @@ const inter = Inter({
 
 export const metadata = {
   title: "AUTODRIVE-AI",
-  description: "Find your Dream car with AUTODRIVE-AI",
+  description: "AI-powered car search, reservations, and messaging",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  await checkUser();
+
   return (
     <ClerkProvider>
       <html lang="en">
         <body
           className={`${inter.className} bg-[#071120] text-white overflow-x-hidden`}
         >
-          {/* HEADER */}
           <Header />
-
-          {/* PAGE CONTENT */}
-          <main className="min-h-screen w-full">
-            {children}
-          </main>
-
-          {/* FOOTER */}
+          <main className="min-h-screen w-full">{children}</main>
           <footer className="bg-black border-t border-white/10 text-white py-6">
             <div className="max-w-7xl mx-auto px-6 text-center">
               <p className="text-sm text-gray-400">
@@ -36,6 +33,7 @@ export default function RootLayout({ children }) {
               </p>
             </div>
           </footer>
+          <Toaster theme="dark" richColors position="top-center" />
         </body>
       </html>
     </ClerkProvider>
