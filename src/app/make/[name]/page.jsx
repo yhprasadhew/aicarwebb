@@ -3,6 +3,8 @@ import { ChevronLeft } from "lucide-react";
 import CarCard from "@/components/car-card";
 import { getAvailableCars } from "@/lib/getCars";
 
+export const dynamic = "force-dynamic";
+
 export default async function MakePage({ params }) {
   const { name } = await params;
   const cars = await getAvailableCars({ make: decodeURIComponent(name) });

@@ -51,7 +51,7 @@ export async function getAvailableCars({ featuredOnly = false, make } = {}) {
       serializeCar(c, { wishlisted: savedIds.has(c.id) })
     );
   } catch (error) {
-    console.error("Database unavailable, using demo cars:", error.message);
+    console.warn("Database unavailable, using demo cars:", error?.message || error);
     let list = demoCars();
     if (featuredOnly) list = list.slice(0, 4);
     if (make) {

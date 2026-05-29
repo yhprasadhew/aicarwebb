@@ -13,6 +13,8 @@ import Link from "next/link";
 import { getAvailableCars } from "@/lib/getCars";
 import DbSetupBanner from "@/components/db-setup-banner";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const cars = await getAvailableCars({ featuredOnly: true });
   const featuredPreview = cars.slice(0, 4);
